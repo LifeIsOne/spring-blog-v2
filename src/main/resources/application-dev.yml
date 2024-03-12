@@ -1,0 +1,6 @@
+server:
+  servlet:
+    encoding:
+      charset: utf-8
+      force: true
+  port: 8080  # 안적어도 됨
