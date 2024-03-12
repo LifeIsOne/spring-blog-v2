@@ -15,6 +15,13 @@ public class BoardController {
 
     private final BoardNativeRepository boardNativeRepository;
 
+    @GetMapping("/board/{id}")
+    public String detail(@PathVariable Integer id, HttpServletRequest request) {
+        Board board = boardNativeRepository.findById(id);
+        request.setAttribute("board", board);
+        return "board/detail";
+    }
+
     @PostMapping("/board/save")
     public String save(String username, String title, String content){
         boardNativeRepository.save(title, content, username);
@@ -34,8 +41,4 @@ public class BoardController {
         return "board/save-form";
     }
 
-    @GetMapping("/board/{id}")
-    public String detail(@PathVariable Integer id) {    // Integer쓰는 이유 null값 받기 위해
-        return "board/detail";
-    }
 }

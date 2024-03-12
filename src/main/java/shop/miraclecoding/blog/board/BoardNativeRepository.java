@@ -13,6 +13,13 @@ import java.util.List;
 public class BoardNativeRepository {
     private final EntityManager em;
 
+
+    public Board findById(int id) {
+        Query query = em.createNativeQuery("SELECT* FROM board_tb WHERE id = ?", Board.class);
+        query.setParameter(1, id);
+        return (Board) query.getSingleResult();
+    }
+
     @Transactional
     public void save(String title, String content, String username){
         Query query =
