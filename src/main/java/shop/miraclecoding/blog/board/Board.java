@@ -19,5 +19,7 @@ public class Board {
     private String username;
     private Timestamp createdAt;
 
-
+    public String getTime(){
+        return MyDateUtil.timestampFormat(createdAt);
+    }
 }
