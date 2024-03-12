@@ -1,11 +1,26 @@
 package shop.mtcoding.blog.board;
 
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
+@AllArgsConstructor
 public class BoardController {
+    private final BoardRepository boardRepository;
+
+
+    @PostMapping("/board/save")
+    public String saveBoard(String username, String title, String content, HttpServletRequest request){
+        boardRepository.saveBoard(title, content, username);
+
+        request.setAttribute("boardList",);
+
+        return "redirect:/";
+    }
 
     @GetMapping( "/")
     public String index() {
