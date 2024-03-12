@@ -1,4 +1,4 @@
-package shop.mtcoding.blog;
+package shop.miraclecoding.blog;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
