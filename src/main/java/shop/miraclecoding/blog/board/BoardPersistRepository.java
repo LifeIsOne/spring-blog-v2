@@ -6,10 +6,17 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Repository
 public class BoardPersistRepository {
     private final EntityManager em;
+
+    public List<Board> findAll(){
+        Query query = em.createNativeQuery("SELECT b FROM Board b ORDER BY b.id DESC", Board.class);
+        return query.getResultList();
+    }
 
     @Transactional
     public Board save(Board board) {
