@@ -23,7 +23,7 @@ public class Board {
     @CreationTimestamp  // pc -> db (날짜주입)
     private Timestamp createdAt;
 
-    public String getTime(){
+    public String getTime(){    // 머스테치에 time을 쓰면 된다.
         return MyDateUtil.timestampFormat(createdAt);
     }
 
