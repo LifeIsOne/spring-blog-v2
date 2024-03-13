@@ -1,5 +1,8 @@
 package shop.miraclecoding.blog.board;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -15,6 +18,52 @@ public class BoardPersistRepositoryTest {
 
     @Autowired // DI
     private BoardPersistRepository boardPersistRepository;
+
+    @Autowired
+    private EntityManager em;
+
+    // 삭제 테스트
+    @Test
+    public void deleteById(){
+        // given
+        int id = 1;
+
+        // when
+        boardPersistRepository.deleteById(id);
+
+        // flush!
+    }
+
+    // 삭제 테스트 v2
+    @Test
+    @Transactional
+    public void deleteByIdV2_test() {
+        // given
+        int id = 1;
+
+        // when
+        boardPersistRepository.deleteById(id);
+
+        // Buffer에 쥐고있는 쿼리를 즉시 전송
+        em.flush();
+    }
+
+
+    @Test
+    public void findById_test(){
+        // given
+        int id = 1;
+
+        // when
+        Board board = boardPersistRepository.findById(id);
+        em.clear();
+        boardPersistRepository.findById(id);
+        System.out.println("findById_test"+board);
+
+        // then
+        assertThat(board.getTitle()).isEqualTo("제목1");
+        assertThat(board.getContent()).isEqualTo("내용1");
+    }
 
     @Test
     public void findAll_test() {
