@@ -14,6 +14,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardController {
 
+    private final BoardRepository boardRepository;
+
     @GetMapping("/board/{id}/update-form")
     public String updateForm(@PathVariable Integer id, HttpServletRequest request){
         return "board/update-form";
@@ -32,6 +34,8 @@ public class BoardController {
 
     @GetMapping("/board/{id}")
     public String detail(@PathVariable Integer id, HttpServletRequest request) {
+        Board board = boardRepository.findByIdJoinUser(id);
+        request.setAttribute("board",board);
         return "board/detail";
     }
 
