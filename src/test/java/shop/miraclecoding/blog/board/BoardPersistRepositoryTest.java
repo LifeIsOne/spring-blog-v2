@@ -21,6 +21,18 @@ public class BoardPersistRepositoryTest {
 
     @Autowired
     private EntityManager em;
+    // 수정 테스트
+    @Test
+    public void updateById_test(){
+        // given
+        int id = 1;
+        String title = "제목 수정1";
+
+        // when
+        Board board = boardPersistRepository.findById(id);
+        board.setTitle(title);
+        em.flush();
+    }
 
     // 삭제 테스트
     @Test

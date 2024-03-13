@@ -1,6 +1,7 @@
 package shop.miraclecoding.blog.board;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,16 +23,17 @@ public class BoardController {
         request.setAttribute("board", board);
         return "board/update-form";
     }
-    // 수정하기 컨트롤러
+
+
     @PostMapping("/board/{id}/update")
-    public String update(@PathVariable Integer id, String title, String content, String username){
-        boardPersistRepository.updateById(id, title, content, username);
+    public String update(@PathVariable Integer id, BoardRequest.UpdateDTO reqDTO){
+        boardPersistRepository.updateById(id, reqDTO);
         return "redirect:/board/"+id;
     }
 
     @PostMapping("/board/{id}/delete")
     public String delete(@PathVariable Integer id){
-        boardNativeRepository.deleteById(id);
+        boardPersistRepository.deleteById(id);
         return "redirect:/";
     }
 
