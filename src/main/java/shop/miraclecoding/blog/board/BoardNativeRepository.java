@@ -13,13 +13,23 @@ import java.util.List;
 public class BoardNativeRepository {
     private final EntityManager em;
 
+//    @Transactional
+//    public void save(String title, String content, String username){
+//        Query query =
+//                em.createNativeQuery("INSERT INTO board_tb(title, content, username, created_at) VALUES (?,?,?,now())");
+//        query.setParameter(1, title);
+//        query.setParameter(2, content);
+//        query.setParameter(3, username);
+//
+//        query.executeUpdate();
+//    }
     @Transactional
     public void save(String title, String content, String username){
         Query query =
-                em.createNativeQuery("INSERT INTO board_tb(title, content, username, created_at) VALUES (?,?,?,now())");
-        query.setParameter(1, title);
-        query.setParameter(2, content);
-        query.setParameter(3, username);
+                em.createQuery("INSERT INTO Board(title, content, username, created_at) VALUES (:title, :content, :username, now()");
+        query.setParameter("title", title);
+        query.setParameter("content", content);
+        query.setParameter("username", username);
 
         query.executeUpdate();
     }
@@ -27,11 +37,11 @@ public class BoardNativeRepository {
     @Transactional
     public void updateById(int id, String title, String content, String username) {
         Query query =
-                em.createNativeQuery("update board_tb set title=?, content=?, username=? where id=?");
-        query.setParameter(1, title);
-        query.setParameter(2, content);
-        query.setParameter(3, username);
-        query.setParameter(4, id);
+                em.createQuery("UPDATE Board b SET b.title = :title, b.content = :content, b.username = :username WHERE b.id = :id");
+        query.setParameter("title", title);
+        query.setParameter("content", content);
+        query.setParameter("username", username);
+        query.setParameter("id", id);
 
         query.executeUpdate();
     }
@@ -46,15 +56,15 @@ public class BoardNativeRepository {
     }
 
     public Board findById(int id) {
-        Query query = em.createNativeQuery("SELECT* FROM board_tb WHERE id = ?", Board.class);
-        query.setParameter(1, id);
+        Query query = em.createQuery("SELECT b FROM Board b WHERE b.id = :id", Board.class);
+        query.setParameter("id", id);
         return (Board) query.getSingleResult();
     }
 
 
 
     public List<Board> findAll(){
-        Query query = em.createNativeQuery("SELECT * FROM board_tb ORDER BY id DESC", Board.class);
+        Query query = em.createQuery("SELECT b FROM Board b ORDER BY b.id DESC", Board.class);
         return query.getResultList();
     }
 }
