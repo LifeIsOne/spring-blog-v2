@@ -5,12 +5,73 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 
+import java.util.List;
+
 @Import(BoardRepository.class)
 @DataJpaTest
 public class BoardRepositoryTest {
 
     @Autowired
     private BoardRepository boardRepository;
+
+    @Test
+    public void findAllV2_test(){
+        List<Board> boardList = boardRepository.findAllV2();
+        System.out.println("findAllV2_test : 조회완료 쿼리 2번");
+        boardList.forEach(board -> {
+            System.out.println(board);
+        });
+    }
+
+    @Test
+    public void randomquery_tset(){
+        int [] ids = {1,2};
+
+        // SELECT u FROM User u WHERE u.id IN (?,?);
+        String q = "SELECT u FROM User u WHERE u.id IN (";
+        for (int i = 0; i < ids.length; i++) {
+            if (i==ids.length-1){
+                q = q + "?)";
+            }else{
+                q = q + "?,";
+            }
+        }
+        System.out.println(q);
+    }
+
+    @Test
+    public void findAll_custom_inquery_test() {
+        List<Board> boardList = boardRepository.findAll();
+
+        int[] userIds = boardList.stream().mapToInt(board -> board.getUser().getId()).distinct().toArray();
+        for (int i : userIds){
+            System.out.println(i);
+        }
+
+        // select * from user_tb where id in (3,2,1,1);
+        // select * from user_tb where id in (3,2,1);
+    }
+
+    @Test
+    public void findAll_LazyLoading_test(){
+        // give
+
+
+        // when
+        List<Board> boardList = boardRepository.findAll();
+
+        // then
+    }
+    @Test
+    public void findAll_test(){
+        // give
+
+
+        // when
+        boardRepository.findAll();
+
+        // then
+    }
 
     @Test
     public void findByIdJoinUser(){
