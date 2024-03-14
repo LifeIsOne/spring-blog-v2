@@ -21,6 +21,7 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav">
                 {{#sessionUser}}
+                {{/sessionUser}}
                     <li class="nav-item">
                         <a class="nav-link" href="/board/save-form">글쓰기</a>
                     </li>
@@ -30,15 +31,14 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">로그아웃</a>
                     </li>
-                {{/sessionUser}}
                 {{#sessionUser}}
+                {{/sessionUser}}
                     <li class="nav-item">
                         <a class="nav-link" href="/join-form">회원가입</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/login-form">로그인</a>
                     </li>
-                {{/sessionUser}}
 
             </ul>
         </div>
