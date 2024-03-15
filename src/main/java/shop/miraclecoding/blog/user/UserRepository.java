@@ -31,10 +31,9 @@ public class UserRepository {
         return user;
     }
 
-    public User findByUsernameAndPassword(String username, String password){
-        Query query = em.createQuery("SELECT u FROM User u WHERE u.username = :username and u.password = :password");
+    public User findByUsername(String username){
+        Query query = em.createQuery("SELECT u FROM User u WHERE u.username = :username");
         query.setParameter("username", username);
-        query.setParameter("password", password);
         return (User) query.getSingleResult();
     }
 }

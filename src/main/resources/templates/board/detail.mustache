@@ -4,13 +4,14 @@
 
     {{#board}}
     <!-- 수정삭제버튼 -->
+    {{#isAuthor}}
     <div class="d-flex justify-content-end">
         <a href="/board/{{id}}/update-form" class="btn btn-warning me-1">수정</a>
         <form action="/board/{{id}}/delete" method="post">
             <button class="btn btn-danger">삭제</button>
         </form>
     </div>
-
+    {{/isAuthor}}
     <div class="d-flex justify-content-end">
         <b>작성자</b> : {{user.username}}
     </div>

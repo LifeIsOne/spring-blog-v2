@@ -1,5 +1,6 @@
 package shop.miraclecoding.blog.user;
 
+import jakarta.persistence.NoResultException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import shop.miraclecoding.blog._core.errors.exception.Exception400;
+import shop.miraclecoding.blog._core.errors.exception.Exception401;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,21 +29,22 @@ public class UserController {
 
     @PostMapping("/join")
     public String join (UserRequest.JoinDTO reqDTO){
-        User sesseionUser = userRepository.save(reqDTO.toEntity());
-
-        session.setAttribute("sessionUser",sesseionUser);
-        return "redirect:/login-form";
+        try {
+            userRepository.save(reqDTO.toEntity());
+        } catch (NoResultException e) {
+            throw new Exception400("중복된 username입니다.");
+        }
+        return "redirect:/";
     }
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO reqDTO){
-        User sessionUser = userRepository.findByUsernameAndPassword(reqDTO.getUsername(), reqDTO.getPassword());
-
-//        if (sessionUser == null){           // 로그인 하셔야죠?
-//            return "redirec:/login-form";
-//        }
-
-        session.setAttribute("sessionUser", sessionUser);
-        return "redirect:/";
+        try {
+            User sessionUser = userRepository.findByUsername(reqDTO.getUsername());
+            session.setAttribute("sessionUser", sessionUser);
+            return "redirect:/";
+        } catch (Exception e) {
+            throw new Exception401("username또는 password가 틀렸습니다.");
+        }
     }
 
     @GetMapping("/join-form")
