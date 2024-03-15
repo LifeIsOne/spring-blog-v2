@@ -6,6 +6,12 @@ import shop.miraclecoding.blog.user.User;
 public class BoardRequest {
 
     @Data
+    public static class UpdateDTO{
+        private String title;
+        private String content;
+    }
+
+    @Data
     public static class SaveDTO{
         private String title;
         private String content;

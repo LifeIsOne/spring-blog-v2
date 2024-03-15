@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import shop.miraclecoding.blog.user.User;
+import shop.miraclecoding.blog.user.UserRequest;
 
 import java.util.List;
 
@@ -19,6 +20,8 @@ public class BoardController {
     private final BoardRepository boardRepository;
     private final HttpSession session;
 
+
+
     @PostMapping("/board/save")
     public String save(BoardRequest.SaveDTO reqDTO){
         User sessionUser = (User) session.getAttribute("sessionUser");
@@ -28,12 +31,15 @@ public class BoardController {
 
     @GetMapping("/board/{id}/update-form")
     public String updateForm(@PathVariable Integer id, HttpServletRequest request){
+        Board board = boardRepository.findById(id);
+        request.setAttribute("board",board);
         return "board/update-form";
     }
 
 
     @PostMapping("/board/{id}/update")
-    public String update(@PathVariable Integer id){
+    public String update(@PathVariable Integer id, BoardRequest.UpdateDTO reqDTO){
+        boardRepository.updateById(id, reqDTO.getTitle(), reqDTO.getContent());
         return "redirect:/board/"+id;
     }
 

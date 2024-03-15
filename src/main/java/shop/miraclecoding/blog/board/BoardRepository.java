@@ -17,6 +17,16 @@ import java.util.Set;
 public class BoardRepository {
     private final EntityManager em;
 
+    // UPDATE board_tb set title = ? WHERE id = ?
+    // UPDATE board_tb set content = ? WHERE id = ?
+    // UPDATE board_tb set title = ?,content = ? WHERE id = ?
+    @Transactional
+    public void updateById(int id, String title, String content){
+        Board board = findById(id);
+        board.setTitle(title);
+        board.setContent(content);
+    }   // Dirty Checking
+
     @Transactional
     public void deleteById(int id){
         Query query = em.createQuery("DELETE FROM Board b WHERE id = :id");
@@ -25,8 +35,9 @@ public class BoardRepository {
     }
 
     @Transactional
-    public void save(Board board){
+    public Board save(Board board){
         em.persist(board);
+        return board;
     }
 
     public List<Board> findAllV3(){
