@@ -26,6 +26,7 @@ public class UserRepository {
         return user;
     }
 
+    @Transactional
     public User save(User user){
         em.persist(user);
         return user;

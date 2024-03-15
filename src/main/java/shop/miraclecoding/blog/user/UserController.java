@@ -31,6 +31,7 @@ public class UserController {
         session.setAttribute("sessionUser",sesseionUser);
         return "redirect:/login-form";
     }
+
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO reqDTO){
         User sessionUser = userRepository.findByUsernameAndPassword(reqDTO.getUsername(), reqDTO.getPassword());
