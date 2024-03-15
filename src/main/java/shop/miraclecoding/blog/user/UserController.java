@@ -4,6 +4,8 @@ import jakarta.persistence.NoResultException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +33,7 @@ public class UserController {
     public String join (UserRequest.JoinDTO reqDTO){
         try {
             userRepository.save(reqDTO.toEntity());
-        } catch (NoResultException e) {
+        } catch (DataIntegrityViolationException e) {
             throw new Exception400("중복된 username입니다.");
         }
         return "redirect:/";
@@ -42,7 +44,7 @@ public class UserController {
             User sessionUser = userRepository.findByUsername(reqDTO.getUsername());
             session.setAttribute("sessionUser", sessionUser);
             return "redirect:/";
-        } catch (Exception e) {
+        } catch (EmptyResultDataAccessException e) {
             throw new Exception401("username또는 password가 틀렸습니다.");
         }
     }
