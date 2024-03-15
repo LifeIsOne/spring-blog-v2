@@ -20,7 +20,10 @@ public class BoardController {
     private final BoardRepository boardRepository;
     private final HttpSession session;
 
-
+    @GetMapping("/hello")
+    public String hello(){
+        return "err/400";
+    }
 
     @PostMapping("/board/save")
     public String save(BoardRequest.SaveDTO reqDTO){
