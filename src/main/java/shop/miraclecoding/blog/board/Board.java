@@ -28,6 +28,9 @@ public class Board {
     @CreationTimestamp  // pc -> db (날짜주입)
     private Timestamp createdAt;
 
+    @Transient  // 필드생성이 안됨
+    private boolean isOwner;
+
     public String getTime(){    // 머스테치에 time을 쓰면 된다.
         return MyDateUtil.timestampFormat(createdAt);
     }

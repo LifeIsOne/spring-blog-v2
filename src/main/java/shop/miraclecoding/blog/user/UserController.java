@@ -18,13 +18,12 @@ import shop.miraclecoding.blog._core.errors.exception.Exception401;
 public class UserController {
 
     private final HttpSession session;
-    private final UserRepository userRepository;
     private final UserService userService;
 
     @PostMapping("/user/update")
     public String update(UserRequest.UpdateDTO reqDTO){
         User sessionUser = (User) session.getAttribute("sessionUser");
-        User newSessionUser = userRepository.updateById(sessionUser.getId(), reqDTO.getPassword(),reqDTO.getEmail());
+        User newSessionUser = userService.userUpdate(sessionUser.getId(), reqDTO);
         session.setAttribute("sessionUser",newSessionUser);
 
         return "redirect:/";
@@ -32,17 +31,14 @@ public class UserController {
 
     @PostMapping("/join")
     public String join (UserRequest.JoinDTO reqDTO){
-        try {
-            userRepository.save(reqDTO.toEntity());
-        } catch (DataIntegrityViolationException e) {
-            throw new Exception400("중복된 username입니다.");
-        }
+//        userService.userUpdate(reqDTO.toEntity());
+
         return "redirect:/";
     }
 
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO reqDTO){
-        User sessionUser = userService.logIn(reqDTO);
+        User sessionUser = userService.로그인(reqDTO);
         session.setAttribute("sessionUser", sessionUser);
         return "redirect:/";
     }
@@ -61,8 +57,8 @@ public class UserController {
     public String updateForm(HttpServletRequest request) {
         User sessionUser = (User) session.getAttribute("sessionUser");
 
-        User user = userRepository.findById(sessionUser.getId());
-        request.setAttribute("user", user);
+//        User user = userService.userUpdate(sessionUser.getId());
+//        request.setAttribute("user", user);
         return "user/update-form";
     }
 

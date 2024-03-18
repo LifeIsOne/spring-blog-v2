@@ -15,6 +15,8 @@ public class BoardJPARepositoryTest {
 
     @Autowired
     private BoardJPARepository boardJPARepository;
+
+    @Autowired
     private EntityManager em;
 
     // save

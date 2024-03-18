@@ -22,10 +22,8 @@ public class UserJPARepositoryTest {
     public void delete_test(){
         // given
         
-        
         // when
-        
-        
+
         // then
         
     }
