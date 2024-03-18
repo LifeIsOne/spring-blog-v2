@@ -18,16 +18,16 @@ public class UserJPARepositoryTest {
     @Autowired
     private UserJPARepository userJPARepository;
     
-    @Test
-    public void delete_test(){
-        // given
-        
-        // when
+//    @Test
+//    public void delete_test(){
+//        // given
+//
+//        // when
+//
+//        // then
+//
+//    }
 
-        // then
-        
-    }
-    
     @Test
     public void findByUsernameAndPassword_test(){
         // given
@@ -42,34 +42,21 @@ public class UserJPARepositoryTest {
     }
 
     @Test
-    public void findAll_paging_test(){
+    public void save_test(){
         // given
-        Sort sort = Sort.by(Sort.Direction.DESC,"id");
-        Pageable pageable = PageRequest.of(0,2,sort);
+        User user = User.builder()
+                .username("happy")
+                .password("1234")
+                .email("happy@nate.com")
+                .build();
 
         // when
-        Page<User> userPG = userJPARepository.findAll(pageable);
-
-        // then
-        ObjectMapper om = new ObjectMapper();
-//        String json = om.writeValueAsString(userPG);
-//        System.out.println(json);
-
-    }
-
-    @Test
-    public void findAll_test(){
-        // given
-
-
-        // when
-        userJPARepository.findAll(Sort.by(Sort.Direction.DESC,"id"));
-
+        userJPARepository.save(user);
 
         // then
 
     }
-    
+
     @Test
     public void findById_test(){
         // given
@@ -87,17 +74,31 @@ public class UserJPARepositoryTest {
 
     }
 
+
+//    @Test
+//    public void findAll_paging_test(){
+//        // given
+//        Sort sort = Sort.by(Sort.Direction.DESC,"id");
+//        Pageable pageable = PageRequest.of(0,2,sort);
+//
+//        // when
+//        Page<User> userPG = userJPARepository.findAll(pageable);
+//
+//        // then
+//        ObjectMapper om = new ObjectMapper();
+////        String json = om.writeValueAsString(userPG);
+////        System.out.println(json);
+//
+//    }
+
     @Test
-    public void save_test(){
+    public void findAll_test(){
         // given
-        User user = User.builder()
-                .username("happy")
-                .password("1234")
-                .email("happy@nate.com")
-                .build();
+
 
         // when
-        userJPARepository.save(user);
+        userJPARepository.findAll(Sort.by(Sort.Direction.DESC,"id"));
+
 
         // then
 

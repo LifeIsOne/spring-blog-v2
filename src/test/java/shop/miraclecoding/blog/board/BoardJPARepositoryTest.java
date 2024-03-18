@@ -34,8 +34,9 @@ public class BoardJPARepositoryTest {
         boardJPARepository.save(board);
 
         // then
-        System.out.println("save_test: " + board.getId()); // 영속객체가 되었기 때문에 아이디가 있는지 확인해보는 것
+        System.out.println("save_test : " + board.getId()); // 영속객체가 되었기 때문에 아이디가 있는지 확인해보는 것
     }
+
     // findById
     @Test
     public void findById_test(){
@@ -52,19 +53,21 @@ public class BoardJPARepositoryTest {
         // then
 
     }
+
     // findByIdJoinUser
     @Test
-    public void findByJoinUser_test(){
+    public void findByIdJoinUser_test(){
         // given
         int id = 1;
 
         // when
-        boardJPARepository.findByIdJoinUser(id);
+        Board board = boardJPARepository.findByIdJoinUser(id);
 
         // then
-
+        System.out.println("findByIdJoinUser_test : " + board.getTitle());
+        System.out.println("findByIdJoinUser_test : " + board.getUser().getUsername());
     }
-    
+
     // findAll (sort)
     @Test
     public void findAll_test(){
