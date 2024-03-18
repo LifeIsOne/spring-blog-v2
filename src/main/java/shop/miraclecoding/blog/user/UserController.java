@@ -19,6 +19,7 @@ public class UserController {
 
     private final HttpSession session;
     private final UserRepository userRepository;
+    private final UserService userService;
 
     @PostMapping("/user/update")
     public String update(UserRequest.UpdateDTO reqDTO){
@@ -38,15 +39,12 @@ public class UserController {
         }
         return "redirect:/";
     }
+
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO reqDTO){
-        try {
-            User sessionUser = userRepository.findByUsername(reqDTO.getUsername());
-            session.setAttribute("sessionUser", sessionUser);
-            return "redirect:/";
-        } catch (EmptyResultDataAccessException e) {
-            throw new Exception401("username또는 password가 틀렸습니다.");
-        }
+        User sessionUser = userService.logIn(reqDTO);
+        session.setAttribute("sessionUser", sessionUser);
+        return "redirect:/";
     }
 
     @GetMapping("/join-form")
