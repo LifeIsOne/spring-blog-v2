@@ -13,17 +13,17 @@ public class UserRepositoryTest {
     @Autowired  // DI
     private UserRepository userRepository;
     
-@Test
-public void findById_test(){
-    // given
-    int id = 1;
+    @Test
+    public void findById_test(){
+        // given
+        int id = 1;
 
-    // when
-    userRepository.findById(id);
+        // when
+        userRepository.findById(id);
 
-    // then
+        // then
 
-}
+    }
 //    @Test
 //    public void findByUsername_test(){
 //        // given
