@@ -9,6 +9,6 @@ public class ReplyRequest {
         private Integer boardId;
         private String comment;
 
-
+//        public
     }
 }
