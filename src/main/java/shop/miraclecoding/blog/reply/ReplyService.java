@@ -3,6 +3,7 @@ package shop.miraclecoding.blog.reply;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import shop.miraclecoding.blog._core.errors.exception.Exception403;
 import shop.miraclecoding.blog._core.errors.exception.Exception404;
 import shop.miraclecoding.blog.board.Board;
 import shop.miraclecoding.blog.board.BoardJPARepository;
@@ -24,5 +25,14 @@ public class ReplyService {
         replyJPARepository.save(reply);
     }
 
+    @Transactional
+    public void 댓글삭제(int replyId, int sessionUserId){
+        Reply reply = replyJPARepository.findById(replyId)
+                .orElseThrow(() -> new Exception404("댓글을 찾을 수 없습니다!"));
 
+        if (reply.getId() != sessionUserId){
+            throw new Exception403("댓글을 삭제할 권한이 없습니다.");
+        }
+        replyJPARepository.deleteById(replyId);
+    }
 }

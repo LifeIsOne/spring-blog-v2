@@ -4,6 +4,7 @@ package shop.miraclecoding.blog.reply;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import shop.miraclecoding.blog.user.User;
 
@@ -20,4 +21,10 @@ public class ReplyController {
         return "redirect:/board/"+reqDTO.getBoardId();
     }
 
+    @PostMapping("/board/{boardId}/reply/{replyId}/delete")
+    public String delete(@PathVariable Integer replyId, @PathVariable Integer boardId){
+        User sessionUser = (User) session.getAttribute(session.getId());
+        replyService.댓글삭제(replyId, sessionUser.getId());
+        return "redirect:/board/"+boardId;
+    }
 }
