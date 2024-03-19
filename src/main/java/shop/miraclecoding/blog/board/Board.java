@@ -5,10 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import shop.miraclecoding.blog.reply.Reply;
 import shop.miraclecoding.blog.user.User;
 import shop.miraclecoding.blog.util.MyDateUtil;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Data
@@ -28,8 +31,11 @@ public class Board {
     @CreationTimestamp  // pc -> db (날짜주입)
     private Timestamp createdAt;
 
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)  // Entity 객체의 변수 명
+    private List<Reply> replies = new ArrayList<>();
+
     @Transient  // 필드생성이 안됨
-    private boolean isOwner;
+    private boolean isBoardOwner;
 
     public String getTime(){    // 머스테치에 time을 쓰면 된다.
         return MyDateUtil.timestampFormat(createdAt);

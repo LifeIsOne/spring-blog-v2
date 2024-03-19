@@ -11,3 +11,8 @@ INSERT INTO board_tb(title, content, user_id, created_at) VALUES ('제목3', '�
 INSERT INTO board_tb(title, content, user_id, created_at) VALUES ('제목4', '내용4', 3, now());
 INSERT INTO board_tb(title, content, user_id, created_at) VALUES ('제목5', '내용5', 4, now());
 INSERT INTO board_tb(title, content, user_id, created_at) VALUES ('제목6', '내용6', 5, now());
+
+INSERT INTO reply_tb(comment, board_id, user_id, created_at) VALUES ('댓글1', 4, 1, now());
+INSERT INTO reply_tb(comment, board_id, user_id, created_at) VALUES ('댓글2', 4, 1, now());
+INSERT INTO reply_tb(comment, board_id, user_id, created_at) VALUES ('댓글3', 4, 2, now());
+INSERT INTO reply_tb(comment, board_id, user_id, created_at) VALUES ('댓글4', 3, 2, now());

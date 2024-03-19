@@ -23,7 +23,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardController {
 
-    private final BoardRepository boardRepository;
     private final HttpSession session;
     private final BoardService boardService;
 
@@ -35,6 +34,7 @@ public class BoardController {
         Board board = boardService.글상세보기(id, sessionUser);
 
         request.setAttribute("board", board);
+        System.out.println("SSR 직전에는 Board와 User만 조회된 상태입니다.");
         return "board/detail";
     }
 
@@ -75,15 +75,9 @@ public class BoardController {
 
 
     @PostMapping("/board/{id}/delete")
-    public String delete(@PathVariable Integer id){
+    public String delete(@PathVariable Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        Board board = boardRepository.findById(id);
-
-        if (sessionUser.getId() != board.getUser().getId()){
-            throw new Exception403("게시글을 삭제할 권한이 없습니다!");
-        }
-
-        boardRepository.deleteById(id);
+        boardService.글삭제(id, sessionUser.getId());
         return "redirect:/";
     }
 
