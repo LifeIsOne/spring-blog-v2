@@ -13,16 +13,6 @@ import java.util.List;
 public class BoardNativeRepository {
     private final EntityManager em;
 
-//    @Transactional
-//    public void save(String title, String content, String username){
-//        Query query =
-//                em.createNativeQuery("INSERT INTO board_tb(title, content, username, created_at) VALUES (?,?,?,now())");
-//        query.setParameter(1, title);
-//        query.setParameter(2, content);
-//        query.setParameter(3, username);
-//
-//        query.executeUpdate();
-//    }
     @Transactional
     public void save(String title, String content, String username){
         Query query =
