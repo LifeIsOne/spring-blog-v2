@@ -24,6 +24,8 @@
                 {{content}}
             </div>
         </div>
+    {{/board}}
+
         <!-- 댓글 -->
         <div class="card mt-3">
             <!-- 댓글등록 -->
@@ -36,12 +38,12 @@
                 </form>
             </div>
 
-            <!-- 댓글목록 -->
-            <div class="card-footer">
-                <b>댓글리스트</b>
-            </div>
-            <div class="list-group">
-                {{#replies}}
+        <!-- 댓글목록 -->
+        <div class="card-footer">
+            <b>댓글리스트</b>
+        </div>
+        <div class="list-group">
+            {{#board.replies}}
                 <!-- 댓글아이템 -->
                 <div class="list-group-item d-flex justify-content-between align-items-center">
                     <div class="d-flex">
@@ -54,20 +56,9 @@
                         </form>
                     {{/replyOwner}}
                 </div>
-                {{/replies}}
-                <!-- 댓글아이템 -->
-                <div class="list-group-item d-flex justify-content-between align-items-center">
-                    <div class="d-flex">
-                        <div class="px-1 me-1 bg-primary text-white rounded">[더미] ssar</div>
-                        <div>댓글 내용입니다</div>
-                    </div>
-                    <form action="/reply/1/delete" method="post">
-                        <button class="btn">🗑</button>
-                    </form>
-                </div>
-            </div>
+            {{/board.replies}}
         </div>
-    {{/board}}
+    </div>
 </div>
 
 {{> /layout/footer}}
