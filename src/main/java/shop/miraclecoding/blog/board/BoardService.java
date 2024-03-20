@@ -51,6 +51,7 @@ public class BoardService {
 
         return boardList.stream().map(board -> new BoardResponse.MainDTO(board)).toList();
     }
+
     @Transactional
     public void 글삭제(Integer boardId, Integer sessionUserId) {
         Board board = boardJPARepository.findById(boardId)

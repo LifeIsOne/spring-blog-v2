@@ -1,17 +1,9 @@
 package shop.miraclecoding.blog.user;
 
-import jakarta.persistence.NoResultException;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
-import shop.miraclecoding.blog._core.errors.exception.Exception400;
-import shop.miraclecoding.blog._core.errors.exception.Exception401;
 import shop.miraclecoding.blog._core.utils.ApiUtil;
 
 @RestController
@@ -22,7 +14,7 @@ public class UserController {
     private final UserService userService;
 
     // TODO : 회원정보 조회 API 필요 -> @GetMapping("/api/users/{id}")
-    @GetMapping("users/{id}")
+    @GetMapping("/users/{id}")
     public ResponseEntity<?> userinfo(@PathVariable Integer id){
         UserResponse.DTO respDTO = userService.회원조회(id);
         return ResponseEntity.ok(new ApiUtil(respDTO));
