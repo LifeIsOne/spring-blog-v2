@@ -12,6 +12,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginInterceptor())
                 .addPathPatterns("/api/**") // api는 인증이 필요 ⭕
-                .excludePathPatterns("/api/boards/{id:\\d+}");  // boards는 인증 필요 ❌
+                .excludePathPatterns("/api/boards/{id:\\d+}/detail");  // boards는 인증 필요 ❌
     }
 }
