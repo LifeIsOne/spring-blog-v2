@@ -6,12 +6,23 @@ import shop.miraclecoding.blog.user.User;
 public class BoardResponse {
 
     @Data
-    public static class DetailDTO{
+    public static class MainDTO {
+        private int id;
+        private String title;
+
+        public MainDTO(Board board) {
+            this.id = board.getId();
+            this.title = board.getTitle();
+        }
+    }
+
+    @Data
+    public static class DetailDTO {
         private Integer id;
         private String title;
         private String content;
         private UserDTO user;
-        private Boolean isAuthor;   // 얘를 받기 위해 만듬.,
+        private Boolean isOwner;
 
         public DetailDTO(Board board, User sessionUser) {
             this.id = board.getId();
@@ -19,12 +30,13 @@ public class BoardResponse {
             this.content = board.getContent();
             this.user = new UserDTO(board.getUser());
 
-            this.isAuthor = false;
-            if (sessionUser != null){
-                if (sessionUser.getId() == board.getUser().getId()){
-                    isAuthor = true;
+            this.isOwner = false;
+            if(sessionUser != null){
+                if(sessionUser.getId() == board.getUser().getId()){
+                    isOwner = true;
                 }
             }
+
         }
 
         @Data

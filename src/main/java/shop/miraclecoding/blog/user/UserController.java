@@ -22,7 +22,7 @@ public class UserController {
     private final UserService userService;
 
     // TODO : 회원정보 조회 API 필요 -> @GetMapping("/api/users/{id}")
-    @GetMapping("/api/users/{id}")
+    @GetMapping("users/{id}")
     public ResponseEntity<?> userinfo(@PathVariable Integer id){
         UserResponse.DTO respDTO = userService.회원조회(id);
         return ResponseEntity.ok(new ApiUtil(respDTO));
@@ -33,6 +33,7 @@ public class UserController {
         User sessionUser = (User) session.getAttribute("sessionUser");
         User newSessionUser = userService.회원수정(sessionUser.getId(), reqDTO);
         session.setAttribute("sessionUser",newSessionUser);
+
         return ResponseEntity.ok(new ApiUtil(newSessionUser));
     }
 
