@@ -1,48 +1,42 @@
 package shop.miraclecoding.blog._core.errors;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import shop.miraclecoding.blog._core.errors.exception.*;
+import shop.miraclecoding.blog._core.utils.ApiUtil;
 
-@ControllerAdvice   // RuntimeException이 터지면 해당 파일로 오류가 모인다.
+@RestControllerAdvice   // RuntimeException이 터지면 해당 파일로 오류가 모인다.
 public class MyExceptionHandler {   // error만 관리하는 컨트롤러
 
     @ExceptionHandler(Exception400.class)
-    public String ex400(RuntimeException e, HttpServletRequest request){
-        request.setAttribute("msg", e.getMessage());
-        return "err/400";
+    public ResponseEntity<?> ex400(RuntimeException e){
+        ApiUtil<?> apiUtil = new ApiUtil<>(400, e.getMessage());   // http body -> 구성한 객체
+
+        return new ResponseEntity<>(apiUtil, HttpStatus.BAD_REQUEST);  // http header, http body
     }
 
     @ExceptionHandler(Exception401.class)
-    public String ex401(RuntimeException e, HttpServletRequest request){
-        request.setAttribute("msg", e.getMessage());
-        return "err/401";
+    public ResponseEntity<?> ex401(RuntimeException e){
+        ApiUtil<?> apiUtil = new ApiUtil<>(401, e.getMessage());
+        return new ResponseEntity<>(apiUtil, HttpStatus.UNAUTHORIZED);
     }
-
     @ExceptionHandler(Exception403.class)
-    public String ex403(RuntimeException e, HttpServletRequest request){
-        request.setAttribute("msg", e.getMessage());
-        return "err/403";
+    public ResponseEntity<?> ex403(RuntimeException e){
+        ApiUtil<?> apiUtil = new ApiUtil<>(403, e.getMessage());
+        return new ResponseEntity<>(apiUtil, HttpStatus.FORBIDDEN);
     }
-
     @ExceptionHandler(Exception404.class)
-    public String ex404(RuntimeException e, HttpServletRequest request){
-        request.setAttribute("msg", e.getMessage());
-        return "err/404";
+    public ResponseEntity<?> ex404(RuntimeException e){
+        ApiUtil<?> apiUtil = new ApiUtil<>(404, e.getMessage());
+        return new ResponseEntity<>(apiUtil, HttpStatus.NOT_FOUND);
     }
-
     @ExceptionHandler(Exception500.class)
-    public String ex500(RuntimeException e, HttpServletRequest request){
-        request.setAttribute("msg", e.getMessage());
-        return "err/500";
+    public ResponseEntity<?> ex500(RuntimeException e){
+        ApiUtil<?> apiUtil = new ApiUtil<>(500, e.getMessage());
+        return new ResponseEntity<>(apiUtil, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-//    실제론 필요하지만 오늘은 하지말자
-//    @ExceptionHandler(Exception.class)
-//    public String exUnknown(Exception e){
-//        // DB에러 로그 남기기
-//        // 관리자 연락하기
-//        // 이메일 보내기
-//        return "err/unknown;
-//    }
 }

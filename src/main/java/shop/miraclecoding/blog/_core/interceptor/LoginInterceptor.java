@@ -15,7 +15,7 @@ public class LoginInterceptor implements HandlerInterceptor{
 
         User sessionUser = (User) session.getAttribute("sessionUser");
         if(sessionUser == null){
-            throw new Exception401("로그인 하셔야 해요");
+            throw new Exception401("로그인 합시다.");
         }
         return true;
     }
