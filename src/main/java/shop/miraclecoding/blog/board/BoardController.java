@@ -25,23 +25,13 @@ public class BoardController {
 
     // Sever-Side Rendering은 DTO를 굳이 만들 필요가 없습니다.
     // 필요한 데이터만 Rendering해서 Client한테 전달하면 된다.
-    @GetMapping("/board/{id}")
-    public String detail(@PathVariable Integer id, HttpServletRequest request) {
-        User sessionUser = (User) session.getAttribute("sessionUser");
-        Board board = boardService.글상세보기(id, sessionUser);
 
-        request.setAttribute("board", board);
-        System.out.println("SSR 직전에는 Board와 User만 조회된 상태입니다.");
-        return "board/detail";
-    }
+    // TODO : 글 상세보기 API 필요
 
-    @GetMapping("/" )
-    public String index(HttpServletRequest request) {
-        List<Board> boardList = boardService.글목록조회();
-        request.setAttribute("boardList", boardList);
-        return "index";
-    }
+    // TODO : 글 목록 조회 API 필요
 
+    // TODO : 글 조회 API 필요
+    
     @PostMapping("/board/save")
     public String save(BoardRequest.SaveDTO reqDTO){
         User sessionUser = (User) session.getAttribute("sessionUser");
@@ -58,12 +48,6 @@ public class BoardController {
         return "redirect:/board/"+id;
     }
 
-    @GetMapping("/board/{id}/update-form")
-    public String updateForm(@PathVariable Integer id, HttpServletRequest request) {
-        Board board = boardService.글조회(id);
-        request.setAttribute("board", board);
-        return "board/update-form";
-    }
 
     @GetMapping("/hello")
     public String hello(){

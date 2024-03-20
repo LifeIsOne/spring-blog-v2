@@ -20,10 +20,12 @@ public class UserController {
     private final HttpSession session;
     private final UserService userService;
 
+    // TODO : 회원정보 조회 API 필요
+
     @PostMapping("/user/update")
     public String update(UserRequest.UpdateDTO reqDTO){
         User sessionUser = (User) session.getAttribute("sessionUser");
-        User newSessionUser = userService.userUpdate(sessionUser.getId(), reqDTO);
+        User newSessionUser = userService.회원수정(sessionUser.getId(), reqDTO);
         session.setAttribute("sessionUser",newSessionUser);
 
         return "redirect:/";
@@ -41,25 +43,6 @@ public class UserController {
         User sessionUser = userService.로그인(reqDTO);
         session.setAttribute("sessionUser", sessionUser);
         return "redirect:/";
-    }
-
-    @GetMapping("/join-form")
-    public String joinForm() {
-        return "user/join-form";
-    }
-
-    @GetMapping("/login-form")
-    public String loginForm() {
-        return "user/login-form";
-    }
-
-    @GetMapping("/user/update-form")
-    public String updateForm(HttpServletRequest request) {
-        User sessionUser = (User) session.getAttribute("sessionUser");
-
-//        User user = userService.userUpdate(sessionUser.getId());
-//        request.setAttribute("user", user);
-        return "user/update-form";
     }
 
     @GetMapping("/logout")
