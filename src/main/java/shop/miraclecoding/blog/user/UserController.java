@@ -20,9 +20,10 @@ public class UserController {
     private final HttpSession session;
     private final UserService userService;
 
-    // TODO : 회원정보 조회 API 필요
+    // TODO : 회원정보 조회 API 필요 -> @GetMapping("/api/users/{id}")
 
-    @PostMapping("/user/update")
+
+    @PostMapping("/users/{id}")
     public String update(UserRequest.UpdateDTO reqDTO){
         User sessionUser = (User) session.getAttribute("sessionUser");
         User newSessionUser = userService.회원수정(sessionUser.getId(), reqDTO);
@@ -33,7 +34,7 @@ public class UserController {
 
     @PostMapping("/join")
     public String join (UserRequest.JoinDTO reqDTO){
-//        userService.userUpdate(reqDTO.toEntity());
+//        userService.회원가입(reqDTO.toEntity());
 
         return "redirect:/";
     }

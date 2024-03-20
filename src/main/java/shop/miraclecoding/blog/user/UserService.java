@@ -36,7 +36,7 @@ public class UserService {
     }
 
     @Transactional
-    public void singUp(UserRequest.JoinDTO reqDTO){
+    public void 회원가입(UserRequest.JoinDTO reqDTO){
         // 1. 유효성 검사 (Controller responsibility)
 
         // 2. username 중복검사 (Service 체크) - DB connection required

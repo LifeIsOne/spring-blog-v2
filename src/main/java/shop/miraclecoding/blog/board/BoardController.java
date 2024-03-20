@@ -26,28 +26,34 @@ public class BoardController {
     // Sever-Side Rendering은 DTO를 굳이 만들 필요가 없습니다.
     // 필요한 데이터만 Rendering해서 Client한테 전달하면 된다.
 
-    // TODO : 글 상세보기 API 필요
+    // TODO : 글 상세보기 API 필요. @GetMapping("/")
 
-    // TODO : 글 목록 조회 API 필요
+    // TODO : 글 목록 조회 API 필요. @GetMapping("/api/boards/{id}/detail")
 
-    // TODO : 글 조회 API 필요
-    
-    @PostMapping("/board/save")
+    // TODO : 글 조회 API 필요. @GetMapping("/api/boards/{id}")
+
+    @PostMapping("/api/boards")
     public String save(BoardRequest.SaveDTO reqDTO){
         User sessionUser = (User) session.getAttribute("sessionUser");
         boardService.글쓰기(reqDTO, sessionUser);
         return "redirect:/";
     }
 
-    @PostMapping("/board/{id}/update")
+    @PutMapping("/api/boards/{id}")
     public String update(@PathVariable Integer id, BoardRequest.UpdateDTO reqDTO){
         User sessionUser = (User) session.getAttribute("sessionUser");
 
-        boardService.글삭제(id, sessionUser.getId());
+        boardService.글수정(id, sessionUser.getId(),reqDTO);
 
         return "redirect:/board/"+id;
     }
 
+    @DeleteMapping("/api/boards/{id}")
+    public String delete(@PathVariable Integer id) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        boardService.글삭제(id, sessionUser.getId());
+        return "redirect:/";
+    }
 
     @GetMapping("/hello")
     public String hello(){
@@ -55,12 +61,6 @@ public class BoardController {
     }
 
 
-    @PostMapping("/board/{id}/delete")
-    public String delete(@PathVariable Integer id) {
-        User sessionUser = (User) session.getAttribute("sessionUser");
-        boardService.글삭제(id, sessionUser.getId());
-        return "redirect:/";
-    }
 
     @GetMapping("/board/save-form")
     public String saveForm() {
