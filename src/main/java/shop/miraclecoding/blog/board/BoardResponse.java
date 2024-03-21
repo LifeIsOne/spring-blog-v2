@@ -9,9 +9,22 @@ import java.util.List;
 
 public class BoardResponse {
 
-    //
     @Data
-    public static class DatailDTO{
+    public static class DTO {
+        private int id;
+        private String title;
+        private String content;
+
+        public DTO(Board board) {
+            this.id = board.getId();
+            this.title = board.getTitle();
+            this.content = board.getContent();
+        }
+    }
+
+    // 게시글 상세보기
+    @Data
+    public static class DetailDTO{
         private int id;
         private String title;
         private String content;
@@ -20,7 +33,7 @@ public class BoardResponse {
         private List<ReplyDTO> replies = new ArrayList<>(); // new를 하지 않으면 null.get하다가 터진다. 초기화 해주자.
         private boolean isOwner;
 
-        public DatailDTO(Board board, User sessionUser) {
+        public DetailDTO(Board board, User sessionUser) {
             this.id = board.getId();
             this.title = board.getTitle();
             this.content = board.getContent();
@@ -52,7 +65,8 @@ public class BoardResponse {
                 this.isOwner = false;
                 if (sessionUser != null){
                     if (sessionUser.getId() == userId) isOwner = true;
-            }   }
+                }
+            }
         }
     }
 

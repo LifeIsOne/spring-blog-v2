@@ -26,6 +26,8 @@ public class UserController {
         User newSessionUser = userService.회원수정(sessionUser.getId(), reqDTO);
         session.setAttribute("sessionUser",newSessionUser);
 
+        // 이 메소드만 DTO 생성위치 예외하자
+        UserResponse.DTO respDTO = new UserResponse.DTO(sessionUser);
         return ResponseEntity.ok(new ApiUtil(newSessionUser));
     }
 
