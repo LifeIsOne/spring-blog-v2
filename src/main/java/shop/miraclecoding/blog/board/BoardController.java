@@ -41,7 +41,7 @@ public class BoardController {
     public ResponseEntity<?> detail (@PathVariable Integer id){
         User sessionUser = (User) session.getAttribute("sessionUser");
         Board board = boardService.글상세보기(id, sessionUser);
-        return ResponseEntity.ok(new ApiUtil(board));
+        return ResponseEntity.ok(new ApiUtil(respDTO));
     }
 
     // TODO : 글 조회 API 필요. @GetMapping("/api/boards/{id}")
